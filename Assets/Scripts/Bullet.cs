@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour {
         string tag = collision.gameObject.tag;
         if (tag.Equals(gameObject.tag)) return;
 
-        ParticlesController.SetBoomParticles(collision.contacts[0].point);
+        EffectsController.PlayBoomEffect(collision.contacts[0].point);
         Destroy(gameObject);
 
         if (tag.Equals("Enemy")) {

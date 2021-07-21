@@ -12,7 +12,6 @@ public class Panzer : MonoBehaviour {
     private ShotController shotController;
 
     private Vector2 input;
-    private float targetRotation;
 
     // Start is called before the first frame update
     void Start() {
@@ -29,10 +28,8 @@ public class Panzer : MonoBehaviour {
         if (input.magnitude > 0) {
             float rotation = Vector2.SignedAngle(Vector2.up, input);
             float rotationRounded = Mathf.Round(rotation / 90);
-            targetRotation = rotationRounded * 90;
+            rb.rotation = rotationRounded * 90;
         }
-
-        rb.rotation = targetRotation;
 
         if (Input.GetButtonDown("Fire1")) {
             shotController.Shoot();

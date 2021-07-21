@@ -6,6 +6,7 @@ public class ShotController : MonoBehaviour
 {
     public Transform shotPoint;
     public Bullet bulletPrefab;
+    public ParticleSystem shootParticle;
 
     public float shootPeriod = 0.2f;
     public bool CanShoot {
@@ -15,8 +16,10 @@ public class ShotController : MonoBehaviour
     private float timer;
 
     private Collider2D col;
+    private Transform tr;
 
     void Awake() {
+        tr = transform;
         col = GetComponent<Collider2D>();
     }
 
@@ -24,6 +27,8 @@ public class ShotController : MonoBehaviour
         if (!CanShoot) return;
 
         Bullet bullet = Instantiate(bulletPrefab, shotPoint.position, shotPoint.rotation);
+        EffectsController.PlayShootEffect(shotPoint);
+        shootParticle.Play();
         Physics2D.IgnoreCollision(col, bullet.col);
         timer = 0;
     }
