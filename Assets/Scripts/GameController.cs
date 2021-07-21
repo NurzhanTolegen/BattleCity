@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    public GameObject player;
+
     public Transform[] enemySpawnPoints;
     public Transform enemyPrefab;
 
@@ -12,12 +16,18 @@ public class GameController : MonoBehaviour
     public float minSpawnPeriod = 3;
     public float maxSpawnPeriod = 10;
 
+    public UnityEvent onWin;
+
+    private int diedEnemyCount;
+
     // Start is called before the first frame update
     void Start() {
-        StartGame();
+        player.SetActive(false);
+        //StartGame();
     }
 
-    void StartGame() {
+    public void StartGame() {
+        player.SetActive(true);
         StartCoroutine(SpawnEnemies());
     }
 
@@ -26,12 +36,30 @@ public class GameController : MonoBehaviour
             float period = Random.Range(minSpawnPeriod, maxSpawnPeriod);
             yield return new WaitForSeconds(period);
 
-            int spawnPointId = Random.Range(0, enemySpawnPoints.Length);
-            Transform spawnPoint = enemySpawnPoints[spawnPointId];
-            Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+            StartCoroutine(SpawnEnemyWithEffect());
         }
     }
 
+    IEnumerator SpawnEnemyWithEffect() {
+        int spawnPointId = Random.Range(0, enemySpawnPoints.Length);
+        Transform spawnPoint = enemySpawnPoints[spawnPointId];
+
+        EffectsController.PlaySpawnEffect(spawnPoint.position);
+        yield return new WaitForSeconds(1.8f);
+
+        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+    }
+
+    public void EnemyDied() {
+        diedEnemyCount++;
+
+        if (diedEnemyCount >= maxEnemyCount)
+            onWin.Invoke();
+    }
+
+    public void Restart() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
     // Update is called once per frame
     void Update()
     {

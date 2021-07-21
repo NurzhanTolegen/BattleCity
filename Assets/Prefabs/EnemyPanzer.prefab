@@ -75,7 +75,7 @@ MonoBehaviour:
   shotPoint: {fileID: 8531808628408202619}
   bulletPrefab: {fileID: 7850105833280227519, guid: 052e987713dd98e44a4ca9c9955eb7f2, type: 3}
   shootParticle: {fileID: 8531808627420868604}
-  shootPeriod: 0.2
+  shootPeriod: 0.4
 --- !u!114 &8531808626407179129
 MonoBehaviour:
   m_ObjectHideFlags: 0

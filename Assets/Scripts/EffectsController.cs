@@ -13,6 +13,9 @@ public class EffectsController : MonoBehaviour
     public ParticleSystem boomParticles;
     public AudioSource boomSound;
 
+    [Header("Spawn")]
+    public ParticleSystem spawnParticles;
+
     private void Awake() {
         instance = this;
         
@@ -25,6 +28,10 @@ public class EffectsController : MonoBehaviour
     }
     public static void PlayShootEffect() {
         instance.shootSound.Play();
+    }
+    public static void PlaySpawnEffect(Vector2 position) {
+        instance.spawnParticles.transform.position = position;
+        instance.spawnParticles.Play();
     }
 
     // Update is called once per frame
