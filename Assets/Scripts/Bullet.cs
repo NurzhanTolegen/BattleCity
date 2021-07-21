@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
-{
+public class Bullet : MonoBehaviour {
     public float damage = 1;
     public float velocity = 10;
 
     private Transform tr;
     private Rigidbody2D rb;
+    [HideInInspector]
+    public Collider2D col;
 
-    // Start is called before the first frame update
-    void Start() {
+    void Awake() {
         tr = transform;
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
 
         SetImpulse();
     }
@@ -22,12 +23,18 @@ public class Bullet : MonoBehaviour
         rb.AddForce(tr.up * velocity, ForceMode2D.Impulse);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.tag.Equals(gameObject.tag)) return;
+    private void OnCollisionEnter2D(Collision2D collision) {
+        string tag = collision.gameObject.tag;
+        if (tag.Equals(gameObject.tag)) return;
 
-        ParticlesController.SetBoomParticles(rb.position);
+        ParticlesController.SetBoomParticles(collision.contacts[0].point);
         Destroy(gameObject);
-        Debug.Log("" + collision.gameObject.name);
+
+        if (tag.Equals("Enemy")) {
+
+        } else if (tag.Equals("Bricks")) {
+            TileDestroyController.DestroyTiles(collision.contacts, 1);
+        }
     }
 }
 
