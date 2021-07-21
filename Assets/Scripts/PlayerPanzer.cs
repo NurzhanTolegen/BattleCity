@@ -5,9 +5,7 @@ using UnityEngine;
 public class PlayerPanzer : MonoBehaviour {
 
     public float speed = 1;
-
-    public bool canMove = true;
-
+    
     private Transform tr;
     private Rigidbody2D rb;
     private ShotController shotController;
@@ -24,8 +22,6 @@ public class PlayerPanzer : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (!canMove) return;
-
         input.x = Input.GetAxis("Horizontal");
         input.y = Input.GetAxis("Vertical");
 
@@ -39,13 +35,8 @@ public class PlayerPanzer : MonoBehaviour {
             shotController.Shoot();
         }
     }
-    public void SetCanMove(bool canMove) {
-        this.canMove = canMove;
-    }
 
     private void FixedUpdate() {
-        if (!canMove) return;
-
         float magnitude = Mathf.Max(Mathf.Abs(input.x), Mathf.Abs(input.y));
         rb.velocity = transform.up * magnitude * speed;
     }
