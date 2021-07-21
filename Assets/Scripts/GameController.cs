@@ -9,21 +9,30 @@ public class GameController : MonoBehaviour
     public CanvasController canvasController;
     public EnemySpawner enemySpawner;
     public GameObject player;
-    
-    // Start is called before the first frame update
+
+    private bool isPlaying;
+
     void Start() {
         player.SetActive(false);
     }
 
     public void StartGame() {
         canvasController.StartGame();
-        player.SetActive(true);
         enemySpawner.Spawn();
+        player.SetActive(true);
+
+        if (!isPlaying)
+            isPlaying = true;
     }
 
     public void GameEnded() {
+        if (!isPlaying)
+            return;
+
         canvasController.EndGame();
         player.GetComponent<PlayerPanzer>().enabled = false;
+
+        isPlaying = false;
     }
 
     public void Restart() {

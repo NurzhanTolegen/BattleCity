@@ -5,11 +5,12 @@ using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour {
 
+    public Transform playerBase;
+
     public Transform[] enemySpawnPoints;
-    public Transform enemyPrefab;
+    public EnemyPanzer enemyPrefab;
 
     public int maxEnemyCount = 10;
-
     public float minSpawnPeriod = 3;
     public float maxSpawnPeriod = 10;
 
@@ -26,15 +27,9 @@ public class EnemySpawner : MonoBehaviour {
             float period = Random.Range(minSpawnPeriod, maxSpawnPeriod);
             yield return new WaitForSeconds(period);
 
+            //a separate coroutine so that the spawn timer does not stop
             StartCoroutine(SpawnEnemyWithEffect());
         }
-    }
-
-    public void EnemyDied() {
-        diedEnemyCount++;
-
-        if (diedEnemyCount >= maxEnemyCount)
-            onWin.Invoke();
     }
 
     IEnumerator SpawnEnemyWithEffect() {
@@ -44,6 +39,19 @@ public class EnemySpawner : MonoBehaviour {
         EffectsController.PlaySpawnEffect(spawnPoint.position);
         yield return new WaitForSeconds(1f);
 
-        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        EnemyPanzer panzer = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        //set player base as a target
+        panzer.target = playerBase;
+
+        //if dies then invoke
+        Health panzerHealth = panzer.GetComponent<Health>();
+        panzerHealth.onDeath.AddListener(EnemyDied);
+    }
+
+    public void EnemyDied() {
+        diedEnemyCount++;
+
+        if (diedEnemyCount >= maxEnemyCount)
+            onWin.Invoke();
     }
 }

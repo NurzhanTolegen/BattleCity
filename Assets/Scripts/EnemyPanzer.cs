@@ -49,6 +49,7 @@ public class EnemyPanzer : MonoBehaviour
         while (true) {
             yield return new WaitForSeconds(moveTimeStep);
 
+            //shooting timer
             if(shootTimer < shootPeriod) {
                 shootTimer += moveTimeStep;
             } else {
@@ -62,33 +63,36 @@ public class EnemyPanzer : MonoBehaviour
             RaycastHit2D hitRight = Physics2D.CircleCast(tr.position, hitRadius, tr.right, hitRadius, hitLayerMask);
             RaycastHit2D hitBack = Physics2D.CircleCast(tr.position, hitRadius, -tr.up, hitRadius, hitLayerMask);
 
-            if (!forwardBlocked && hitForward) {
+            //if there is a wall in front of the panzer
+            if (!forwardBlocked && hitForward)
                 forwardBlocked = true;
-            }
 
-            if (!turnDetected && (!hitLeft || !hitRight)) {
+            //if there is a turn along the way
+            if (!turnDetected && (!hitLeft || !hitRight))
                 turnDetected = true;
-            }
 
             if (forwardBlocked || turnDetected) {
+                //if direction matches with direction to target
+                Vector2 dirToTarget = target.position - tr.position;
+                float leftDot = Vector2.Dot(-tr.right, dirToTarget);
+                float rightDot = Vector2.Dot(tr.right, dirToTarget);
+                //float backDot = Vector2.Dot(-tr.up, dirToTarget);
+
+                //array with rotations(to free directions) to turn
                 List<int> ways = new List<int>();
-                if (!hitForward)
-                    ways.Add(0);
-                if (!hitLeft)
-                    ways.Add(90);
-                if (!hitRight)
-                    ways.Add(-90);
-                if (!hitBack)
-                    ways.Add(180);
+                if (!hitForward) ways.Add(0);
+                if (!hitLeft && leftDot >= 0) ways.Add(90);
+                if (!hitRight && rightDot >= 0) ways.Add(-90);
+                if (!hitBack) ways.Add(180);
 
                 if (ways.Count > 0) {
                     int randomSide = Random.Range(0, ways.Count);
                     rb.rotation += ways[randomSide];
                 }
-                
+
+                //in order not to make a second check instantly
                 forwardBlocked = false;
                 turnDetected = false;
-
                 yield return new WaitForSeconds(sleepAfterTurn);
             }
 

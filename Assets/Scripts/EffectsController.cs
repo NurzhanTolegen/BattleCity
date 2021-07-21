@@ -34,15 +34,4 @@ public class EffectsController : MonoBehaviour
         instance.spawnParticles.Play();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
-
-public class Effect {
-    public string name = "Effect";
-    public ParticleSystem particleSystem;
-    public AudioSource audioSource;
 }

@@ -13,12 +13,6 @@ public class TileDestroyController : MonoBehaviour
         instance = this;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public static void DestroyTiles(ContactPoint2D[] contacts, float range) {
         Vector3 hitPosition = Vector3.zero;
         foreach (ContactPoint2D hit in contacts) {
@@ -30,7 +24,6 @@ public class TileDestroyController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         

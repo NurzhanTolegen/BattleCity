@@ -5656,11 +5656,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d96f619620bbb543a4e1f300db18ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBase: {fileID: 531051895}
   enemySpawnPoints:
   - {fileID: 800798509}
   - {fileID: 798992131}
   - {fileID: 1136462867}
-  enemyPrefab: {fileID: 8531808626407179128, guid: df6674f656323e347a061ce14605677a, type: 3}
+  enemyPrefab: {fileID: 1647550856837710393, guid: df6674f656323e347a061ce14605677a, type: 3}
   maxEnemyCount: 20
   minSpawnPeriod: 1
   maxSpawnPeriod: 5

@@ -12,20 +12,18 @@ public class PlayerPanzer : MonoBehaviour {
 
     private Vector2 input;
 
-
-    // Start is called before the first frame update
     void Start() {
         tr = transform;
         rb = GetComponent<Rigidbody2D>();
         shotController = GetComponent<ShotController>();
     }
 
-    // Update is called once per frame
     void Update() {
         input.x = Input.GetAxis("Horizontal");
         input.y = Input.GetAxis("Vertical");
 
         if (input.magnitude > 0) {
+            //in order for the direction to be unambiguous (up / down / left / right)
             float rotation = Vector2.SignedAngle(Vector2.up, input);
             float rotationRounded = Mathf.Round(rotation / 90);
             rb.rotation = rotationRounded * 90;

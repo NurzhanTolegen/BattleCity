@@ -52,10 +52,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   speed: 3
-  moveTimeStep: 0.2
+  moveTimeStep: 0.1
   sleepAfterTurn: 0.1
-  minShootPeriod: 0.5
-  maxShootPeriod: 2
+  minShootPeriod: 0.4
+  maxShootPeriod: 1.5
   hitLayerMask:
     serializedVersion: 2
     m_Bits: 55
