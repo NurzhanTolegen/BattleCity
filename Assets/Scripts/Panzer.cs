@@ -9,6 +9,7 @@ public class Panzer : MonoBehaviour {
 
     private Transform tr;
     private Rigidbody2D rb;
+    private ShotController shotController;
 
     private Vector2 input;
     private float targetRotation;
@@ -17,6 +18,7 @@ public class Panzer : MonoBehaviour {
     void Start() {
         tr = transform;
         rb = GetComponent<Rigidbody2D>();
+        shotController = GetComponent<ShotController>();
     }
 
     // Update is called once per frame
@@ -31,6 +33,10 @@ public class Panzer : MonoBehaviour {
         }
 
         rb.rotation = targetRotation;
+
+        if (Input.GetButtonDown("Fire1")) {
+            shotController.Shoot();
+        }
     }
 
     private void FixedUpdate() {
