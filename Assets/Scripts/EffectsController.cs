@@ -23,7 +23,7 @@ public class EffectsController : MonoBehaviour
         instance.boomParticles.Play();
         instance.boomSound.Play();
     }
-    public static void PlayShootEffect(Transform shotPoint) {
+    public static void PlayShootEffect() {
         instance.shootSound.Play();
     }
 

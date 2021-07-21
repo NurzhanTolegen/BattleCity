@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour {
-    public float damage = 1;
+    public int damage = 1;
     public float velocity = 10;
 
     private Transform tr;
@@ -25,13 +25,13 @@ public class Bullet : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision) {
         string tag = collision.gameObject.tag;
-        if (tag.Equals(gameObject.tag)) return;
 
         EffectsController.PlayBoomEffect(collision.contacts[0].point);
         Destroy(gameObject);
 
-        if (tag.Equals("Enemy")) {
-
+        if (tag.Equals("Enemy") || tag.Equals("Player")) {
+            Health health = collision.gameObject.GetComponent<Health>();
+            health.Damage(damage);
         } else if (tag.Equals("Bricks")) {
             TileDestroyController.DestroyTiles(collision.contacts, 1);
         }

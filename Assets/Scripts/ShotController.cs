@@ -27,9 +27,11 @@ public class ShotController : MonoBehaviour
         if (!CanShoot) return;
 
         Bullet bullet = Instantiate(bulletPrefab, shotPoint.position, shotPoint.rotation);
-        EffectsController.PlayShootEffect(shotPoint);
-        shootParticle.Play();
         Physics2D.IgnoreCollision(col, bullet.col);
+
+        EffectsController.PlayShootEffect();
+        shootParticle.Play();
+
         timer = 0;
     }
 

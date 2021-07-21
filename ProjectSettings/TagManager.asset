@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Bricks
   - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Players
   - Water
   - UI
   - 

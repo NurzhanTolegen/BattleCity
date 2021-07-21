@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Panzer : MonoBehaviour {
+public class PlayerPanzer : MonoBehaviour {
 
     public float speed = 1;
-    public float lerpSpeed = 20;
 
     private Transform tr;
     private Rigidbody2D rb;
